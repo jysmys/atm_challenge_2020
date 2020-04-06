@@ -12,7 +12,13 @@ describe Atm do
 
     it 'allow withdrawal if the account has enough balance' do
         #fix more later
-        expected_output = { status: true, message: 'success', date: Date.today, amount: 45 }
+        expected_output = { 
+            status: true, 
+            message: 'success', 
+            date: Date.today, 
+            amount: 45,
+            bills: [20, 20, 5] 
+        }
         #check that happy path works
         expect(subject.withdraw(45,'1234',account)).to eq expected_output
     end
