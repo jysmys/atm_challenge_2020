@@ -4,7 +4,7 @@ class Account
     def initialize
         @exp_date = set_expire_date
         @pin_code = generate_pin
-        @account_status
+        @account_status = :active
         @balance
     end
 
@@ -14,5 +14,9 @@ class Account
 
     def generate_pin
         rand(10000..19999).to_s[1,4]
+    end
+    
+    def deactivate
+        @account_status = :deactivate
     end
 end
