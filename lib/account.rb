@@ -6,7 +6,7 @@ class Account
         @exp_date = set_expire_date
         @pin_code = generate_pin
         @account_status = :active
-        @balance
+        @balance = 0
        # @owner = attrs[:owner] = nil ? missing_owner : attrs[:owner]
         set_owner(attrs[:owner])
     end
