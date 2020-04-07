@@ -28,4 +28,22 @@ class Person
         @name = name
     end
 
+    def withdraw(attrs = {})
+        puts "withdraw was called"
+        # receipt = attrs[:atm].withdraw(attrs[:amount],@account.pin_code,@account)
+        # puts receipt
+        if attrs[:atm].nil?
+            raise 'An ATM is required'
+        elsif @account.nil?
+            raise 'Person has no account'
+        else
+            receipt = attrs[:atm].withdraw(attrs[:amount],@account.pin_code,@account)
+            if receipt[:status]
+                @cash += receipt[:amount]
+            else 
+                raise receipt[:message]
+            end
+        end 
+    end
+
 end
