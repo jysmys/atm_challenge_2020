@@ -47,17 +47,18 @@ describe Person do
         end
 
         it 'can withdraw funds' do
+            subject.account.balance = 100
             expect(subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm)).to be_truthy
         end
 
         it 'withdraw is expected to to raise an error if no ATM is passed in' do
-            expect(subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account)).to raise_error 'An ATM is required'
+            expect{subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account)}.to raise_error 'An ATM is required'
         end
 
 
         it 'withdraw is expected to to raise an error if person does not have enough money' do
             subject.account.balance = 50
-            expect(subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account)).to raise_error 'Person does not have enough funds in his account'
+            expect{subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm)}.to raise_error 'insufficient funds'
         end
 
         it 'funds are added to cash, and deducted from account balance' do
