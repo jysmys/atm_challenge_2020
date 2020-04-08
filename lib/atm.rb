@@ -19,7 +19,7 @@ class Atm
         when account_disabled?(account.account_status) 
             { status: false, message: 'Account disabled', date: Date.today }
         else
-            perform_transaction(amount, account)
+            perform_transaction((amount/5)*5, account)
         end
     end
 
