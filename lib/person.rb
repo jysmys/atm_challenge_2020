@@ -12,15 +12,7 @@ class Person
         @account = Account.new(owner: self)
     end
 
-    def deposit(amount)
-        if @account.nil?
-            raise 'No account present'
-        else
-            @account.balance += amount
-            @cash -= amount
-        end 
-    end
-
+    
     def set_name(name)
         if name.nil?
             raise 'A name is required'
@@ -28,12 +20,26 @@ class Person
         @name = name
     end
 
-    def withdraw(attrs = {})
-        attrs[:atm].nil? ? (raise 'An ATM is required') : attrs[:atm]
-        @account.nil? ? (raise 'Person has no account') : @account
-        receipt = attrs[:atm].withdraw(attrs[:amount],@account.pin_code,@account)
-        puts receipt
-        receipt[:status] == true ? @cash += attrs[:amount] : (raise receipt[:message])
+    def deposit(amount)
+        @account.nil? ? (raise 'No account present') : deposit_account(amount)
+    end
+
+    def withdraw(attr)
+        attr[:atm].nil? ? (raise RuntimeError, 'An ATM is required') : attr[:atm]
+        @account.nil? ? (raise RuntimeError, 'Person has no account') : @account
+        withdraw_account(attr)
+    end
+
+    private
+
+    def deposit_account(amount)
+        @account.balance += amount
+        @cash -= amount
+    end
+
+    def withdraw_account(attr)
+        receipt = attr[:atm].withdraw(attr[:amount],@account.pin_code,@account)
+        receipt[:status] == true ? @cash += attr[:amount] : (raise receipt[:message])
     end
 
 end
