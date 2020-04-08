@@ -14,10 +14,7 @@ class Person
 
     
     def set_name(name)
-        if name.nil?
-            raise 'A name is required'
-        end
-        @name = name
+        name.nil? ? (raise 'A name is required') : name
     end
 
     def deposit(amount)
